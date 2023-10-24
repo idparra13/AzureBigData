@@ -1,0 +1,9 @@
+{
+	"name": "adf-fabric-iparra",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f560364e-3a0c-4b2d-9ac7-f8c4d12ac452",
+		"tenantId": "b56a31fe-f67f-4f55-86e0-0e8ffd991297"
+	}
+}
