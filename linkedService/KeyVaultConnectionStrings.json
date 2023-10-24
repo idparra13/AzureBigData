@@ -1,0 +1,10 @@
+{
+	"name": "KeyVaultConnectionStrings",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-claves-iparra.vault.azure.net/"
+		}
+	}
+}
