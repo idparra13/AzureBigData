@@ -1,0 +1,33 @@
+{
+	"name": "SqlDDBB2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlDDBB2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"urlKeyVault": {
+				"type": "string"
+			},
+			"schema2": {
+				"type": "string"
+			},
+			"table": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema2",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
+		}
+	}
+}
