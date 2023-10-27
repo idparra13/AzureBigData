@@ -56,7 +56,60 @@
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Codigo",
+												"type": "Guid",
+												"physicalType": "uniqueidentifier"
+											},
+											"sink": {
+												"name": "Codigo",
+												"type": "Guid",
+												"physicalType": "Guid"
+											}
+										},
+										{
+											"source": {
+												"name": "Nombre",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "Nombre",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "CodigoDane",
+												"type": "String",
+												"physicalType": "nvarchar"
+											},
+											"sink": {
+												"name": "CodigoDane",
+												"type": "String",
+												"physicalType": "String"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
@@ -69,6 +122,23 @@
 										},
 										"schema1": {
 											"value": "@item().schema",
+											"type": "Expression"
+										},
+										"table": {
+											"value": "@item().table",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SqlDDBB2",
+									"type": "DatasetReference",
+									"parameters": {
+										"urlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
+										"schema2": {
+											"value": "@item().schema2",
 											"type": "Expression"
 										},
 										"table": {
