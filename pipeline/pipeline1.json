@@ -51,8 +51,33 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "SqlDDBB1",
+									"type": "DatasetReference",
+									"parameters": {
+										"urlKeyVault": {
+											"value": "https://kv-claves-iparra.vault.azure.net/",
+											"type": "Expression"
+										},
+										"schema1": {
+											"value": "@item().schema",
+											"type": "Expression"
+										},
+										"table": {
+											"value": "@item().tabla",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
@@ -60,16 +85,12 @@
 		],
 		"parameters": {
 			"schema1": {
-				"type": "array",
-				"defaultValue": [
-					"finance"
-				]
+				"type": "string",
+				"defaultValue": "finance"
 			},
 			"schema2": {
-				"type": "array",
-				"defaultValue": [
-					"dbo"
-				]
+				"type": "string",
+				"defaultValue": "dbo"
 			}
 		},
 		"variables": {
