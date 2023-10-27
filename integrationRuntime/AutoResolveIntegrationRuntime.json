@@ -2,13 +2,21 @@
 	"name": "AutoResolveIntegrationRuntime",
 	"properties": {
 		"type": "Managed",
+		"description": "1",
 		"typeProperties": {
 			"computeProperties": {
 				"location": "AutoResolve",
 				"dataFlowProperties": {
 					"computeType": "General",
 					"coreCount": 8,
-					"timeToLive": 0
+					"timeToLive": 0,
+					"cleanup": true,
+					"customProperties": []
+				},
+				"pipelineExternalComputeScaleProperties": {
+					"timeToLive": 60,
+					"numberOfPipelineNodes": 1,
+					"numberOfExternalNodes": 1
 				}
 			}
 		},
