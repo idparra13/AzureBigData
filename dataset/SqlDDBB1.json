@@ -3,7 +3,11 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SqlDDBB1",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"UrlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
+				"SecretName": "ConnectionStringDDBB1"
+			}
 		},
 		"parameters": {
 			"urlKeyVault": {

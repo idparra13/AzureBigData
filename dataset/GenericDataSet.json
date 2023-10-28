@@ -5,8 +5,22 @@
 			"referenceName": "SqlDDBB1",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"UrlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
-				"SecretName": "ConnectionStringDDBB1"
+				"UrlKeyVault": {
+					"value": "@dataset().urlKeyVault",
+					"type": "Expression"
+				},
+				"SecretName": {
+					"value": "@dataset().secret",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"urlKeyVault": {
+				"type": "string"
+			},
+			"secret": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
