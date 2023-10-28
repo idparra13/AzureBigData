@@ -77,7 +77,7 @@
 							"urlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
 							"secret": "ConnectionStringDDBB1",
 							"schema": "dane",
-							"tabla": "valores"
+							"table": "valores"
 						}
 					}
 				]
