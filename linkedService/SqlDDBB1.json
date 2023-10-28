@@ -1,6 +1,16 @@
 {
 	"name": "SqlDDBB1",
 	"properties": {
+		"parameters": {
+			"UrlKeyVault": {
+				"type": "string",
+				"defaultValue": "https://kv-claves-iparra.vault.azure.net/"
+			},
+			"SecretName": {
+				"type": "string",
+				"defaultValue": "ConnectionStringDDBB1"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
