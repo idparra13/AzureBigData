@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Validation1",
+				"name": "ValidateFile",
 				"type": "Validation",
 				"dependsOn": [],
 				"userProperties": [],
@@ -17,11 +17,11 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CopyFileToDatabase",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Validation1",
+						"activity": "ValidateFile",
 						"dependencyConditions": [
 							"Succeeded"
 						]
