@@ -56,6 +56,248 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DP",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Archipiélago de San Andrés",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Archipiélago de San Andrés",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DPMP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DPMP",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MPIO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MPIO",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2005",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2005",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2006",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2006",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2007",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2007",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2008",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2008",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2009",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2009",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2010",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2010",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2011",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2011",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2012",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2012",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2013",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2013",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2014",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2014",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2015",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2015",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2016",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2016",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2017",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2017",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2018",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2018",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2019",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2019",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "2020",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "2020",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
