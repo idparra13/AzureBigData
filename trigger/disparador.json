@@ -1,0 +1,24 @@
+{
+	"name": "disparador",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ejercicio3",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2023-10-27T19:30:00",
+				"timeZone": "SA Pacific Standard Time"
+			}
+		}
+	}
+}
