@@ -21,6 +21,12 @@
 			},
 			"secret": {
 				"type": "string"
+			},
+			"schema": {
+				"type": "string"
+			},
+			"tabla": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
