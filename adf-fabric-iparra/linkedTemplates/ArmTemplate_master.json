@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-fabric-iparra"
+		},
+		"StorageAccountLink_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"StorageAccountLink\""
+		},
+		"KeyVaultConnectionStrings_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-claves-iparra.vault.azure.net/"
+		},
+		"SqlDDBB1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "ConnectionStringDDBB1"
+		},
+		"SqlDDBB2_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "ConnectionStringDDBB2"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token de SAS para la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-fabric-iparra_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"StorageAccountLink_connectionString": {
+						"value": "[parameters('StorageAccountLink_connectionString')]"
+					},
+					"KeyVaultConnectionStrings_properties_typeProperties_baseUrl": {
+						"value": "[parameters('KeyVaultConnectionStrings_properties_typeProperties_baseUrl')]"
+					},
+					"SqlDDBB1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('SqlDDBB1_properties_typeProperties_connectionString_secretName')]"
+					},
+					"SqlDDBB2_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('SqlDDBB2_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

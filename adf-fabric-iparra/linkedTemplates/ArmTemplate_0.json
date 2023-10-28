@@ -1,0 +1,966 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-fabric-iparra"
+		},
+		"StorageAccountLink_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"StorageAccountLink\""
+		},
+		"KeyVaultConnectionStrings_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-claves-iparra.vault.azure.net/"
+		},
+		"SqlDDBB1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "ConnectionStringDDBB1"
+		},
+		"SqlDDBB2_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "ConnectionStringDDBB2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/KeyVaultConnectionStrings')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('KeyVaultConnectionStrings_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"description": "1",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0,
+							"cleanup": true,
+							"customProperties": []
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60,
+							"numberOfPipelineNodes": 1,
+							"numberOfExternalNodes": 1
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlDDBB1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"UrlKeyVault": {
+						"type": "string",
+						"defaultValue": "https://kv-claves-iparra.vault.azure.net/"
+					},
+					"SecretName": {
+						"type": "string",
+						"defaultValue": "ConnectionStringDDBB1"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVaultConnectionStrings",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('SqlDDBB1_properties_typeProperties_connectionString_secretName')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/linkedServices/KeyVaultConnectionStrings')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlDDBB2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyVaultConnectionStrings",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('SqlDDBB2_properties_typeProperties_connectionString_secretName')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/linkedServices/KeyVaultConnectionStrings')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StorageAccountLink')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('StorageAccountLink_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlDDBB1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlDDBB1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"UrlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
+						"SecretName": "ConnectionStringDDBB1"
+					}
+				},
+				"parameters": {
+					"urlKeyVault": {
+						"type": "string"
+					},
+					"schema1": {
+						"type": "string"
+					},
+					"table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema1",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlDDBB1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlDDBB2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlDDBB2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"urlKeyVault": {
+						"type": "string"
+					},
+					"schema2": {
+						"type": "string"
+					},
+					"table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema2",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlDDBB2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "StorageAccountLink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "datos",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Municipio.xls",
+						"container": "ejercicio3"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "DP",
+						"type": "String"
+					},
+					{
+						"name": "Archipiélago de San Andrés",
+						"type": "String"
+					},
+					{
+						"name": "DPMP",
+						"type": "String"
+					},
+					{
+						"name": "MPIO",
+						"type": "String"
+					},
+					{
+						"name": "2005",
+						"type": "String"
+					},
+					{
+						"name": "2006",
+						"type": "String"
+					},
+					{
+						"name": "2007",
+						"type": "String"
+					},
+					{
+						"name": "2008",
+						"type": "String"
+					},
+					{
+						"name": "2009",
+						"type": "String"
+					},
+					{
+						"name": "2010",
+						"type": "String"
+					},
+					{
+						"name": "2011",
+						"type": "String"
+					},
+					{
+						"name": "2012",
+						"type": "String"
+					},
+					{
+						"name": "2013",
+						"type": "String"
+					},
+					{
+						"name": "2014",
+						"type": "String"
+					},
+					{
+						"name": "2015",
+						"type": "String"
+					},
+					{
+						"name": "2016",
+						"type": "String"
+					},
+					{
+						"name": "2017",
+						"type": "String"
+					},
+					{
+						"name": "2018",
+						"type": "String"
+					},
+					{
+						"name": "2019",
+						"type": "String"
+					},
+					{
+						"name": "2020",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/StorageAccountLink')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GenericDataSet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlDDBB1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"UrlKeyVault": {
+							"value": "@dataset().urlKeyVault",
+							"type": "Expression"
+						},
+						"SecretName": {
+							"value": "@dataset().secret",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"urlKeyVault": {
+						"type": "string"
+					},
+					"secret": {
+						"type": "string"
+					},
+					"schema": {
+						"type": "string"
+					},
+					"table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlDDBB1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "table",
+							"value": {
+								"value": "@json('[\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbo\",\n      \"tabla\":\"LogisticsAddressCountryRegionStaging\",\n      \"pk_integracion\":\"COUNTRYREGION\"\n   },\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbo\",\n      \"tabla\":\"PaymTermInvoiceStaging\",\n      \"pk_integracion\":\"DATAAREAID\"\n   },\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbo\",\n      \"tabla\":\"UFTProjInvoiceJourStaging\",\n      \"pk_integracion\":\"DATAAREAID\"\n   },\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbo\",\n      \"tabla\":\"aqs_canton\",\n      \"pk_integracion\":\"Codigo\"\n   },\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbo\",\n      \"tabla\":\"aqs_cliente\",\n      \"pk_integracion\":\"IdClienteCrm\"\n   }\n]')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('table')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Codigo",
+														"type": "Guid",
+														"physicalType": "uniqueidentifier"
+													},
+													"sink": {
+														"name": "Codigo",
+														"type": "Guid",
+														"physicalType": "Guid"
+													}
+												},
+												{
+													"source": {
+														"name": "Nombre",
+														"type": "String",
+														"physicalType": "varchar"
+													},
+													"sink": {
+														"name": "Nombre",
+														"type": "String",
+														"physicalType": "String"
+													}
+												},
+												{
+													"source": {
+														"name": "CodigoDane",
+														"type": "String",
+														"physicalType": "nvarchar"
+													},
+													"sink": {
+														"name": "CodigoDane",
+														"type": "String",
+														"physicalType": "String"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "SqlDDBB1",
+											"type": "DatasetReference",
+											"parameters": {
+												"urlKeyVault": {
+													"value": "https://kv-claves-iparra.vault.azure.net/",
+													"type": "Expression"
+												},
+												"schema1": {
+													"value": "@item().schema",
+													"type": "Expression"
+												},
+												"table": {
+													"value": "@item().table",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SqlDDBB2",
+											"type": "DatasetReference",
+											"parameters": {
+												"urlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
+												"schema2": {
+													"value": "@item().schema2",
+													"type": "Expression"
+												},
+												"table": {
+													"value": "@item().table",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"schema1": {
+						"type": "string",
+						"defaultValue": "finance"
+					},
+					"schema2": {
+						"type": "string",
+						"defaultValue": "dbo"
+					}
+				},
+				"variables": {
+					"table": {
+						"type": "Array",
+						"defaultValue": [
+							"LogisticsAddressCountryRegionStaging",
+							"PaymTermInvoiceStaging",
+							"UFTProjInvoiceJourStaging",
+							"aqs_canton",
+							"aqs_cliente"
+						]
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlDDBB1')]",
+				"[concat(variables('factoryId'), '/datasets/SqlDDBB2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ejercicio3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Validation1",
+						"type": "Validation",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Excel1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"timeout": "0.00:01:00",
+							"sleep": 10
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Validation1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"modifiedDatetimeStart": "2023-10-28T00:00:00.000Z",
+									"modifiedDatetimeEnd": "2023-10-28T02:00:00.000Z",
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DP",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DP",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Archipiélago de San Andrés",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Archipiélago de San Andrés",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DPMP",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DPMP",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MPIO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MPIO",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2005",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2005",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2006",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2006",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2007",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2007",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2008",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2008",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2009",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2009",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2010",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2010",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2011",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2011",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2012",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2012",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2013",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2013",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2014",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2014",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2015",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2015",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2016",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2016",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2017",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2017",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2018",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2018",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2019",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2019",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "2020",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "2020",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Excel1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "GenericDataSet",
+								"type": "DatasetReference",
+								"parameters": {
+									"urlKeyVault": "https://kv-claves-iparra.vault.azure.net/",
+									"secret": "ConnectionStringDDBB1",
+									"schema": "dane",
+									"table": "valores"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Excel1')]",
+				"[concat(variables('factoryId'), '/datasets/GenericDataSet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/disparador')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ejercicio3",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 10,
+						"startTime": "2023-10-27T19:30:00",
+						"timeZone": "SA Pacific Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ejercicio3')]"
+			]
+		}
+	]
+}

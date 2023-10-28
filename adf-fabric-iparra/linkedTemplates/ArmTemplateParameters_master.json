@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-fabric-iparra"
+		},
+		"StorageAccountLink_connectionString": {
+			"value": ""
+		},
+		"KeyVaultConnectionStrings_properties_typeProperties_baseUrl": {
+			"value": "https://kv-claves-iparra.vault.azure.net/"
+		},
+		"SqlDDBB1_properties_typeProperties_connectionString_secretName": {
+			"value": "ConnectionStringDDBB1"
+		},
+		"SqlDDBB2_properties_typeProperties_connectionString_secretName": {
+			"value": "ConnectionStringDDBB2"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
