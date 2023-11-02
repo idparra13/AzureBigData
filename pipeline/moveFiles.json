@@ -111,7 +111,12 @@
 							"inputs": [
 								{
 									"referenceName": "DataSourceFile",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"contenedor": "1",
+										"directorio": "1",
+										"nombrearchivo": "1"
+									}
 								}
 							],
 							"outputs": [
