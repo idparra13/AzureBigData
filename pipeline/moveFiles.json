@@ -17,7 +17,11 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DataSourceFolder",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios",
+							"directorio": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios"
+						}
 					},
 					"fieldList": [
 						"childItems"
