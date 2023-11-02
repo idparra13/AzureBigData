@@ -182,7 +182,7 @@
 											"type": "Expression"
 										},
 										"nombrearchivo": {
-											"value": "@item().nombrearchivo",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
