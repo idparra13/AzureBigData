@@ -21,18 +21,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().nombrearchivo",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@{dataset().directorio}",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@{dataset().contenedor}",
-					"type": "Expression"
-				}
+				"fileName": "Creacion.xlsb",
+				"container": "binarios"
 			}
 		}
 	}
