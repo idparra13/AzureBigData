@@ -85,7 +85,7 @@
 					"batchCount": 20,
 					"activities": [
 						{
-							"name": "Get Metadata1",
+							"name": "GetMetadata",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -132,7 +132,7 @@
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata1",
+									"activity": "GetMetadata",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -141,7 +141,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@activity('GetFileList').output.exists",
+									"value": "@activity('GetMetadata').output.exists",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
@@ -207,6 +207,10 @@
 													},
 													"directorio": {
 														"value": "@pipeline().parameters.DestinationStore_Directory",
+														"type": "Expression"
+													},
+													"nombrearchivo": {
+														"value": "@item().name",
 														"type": "Expression"
 													}
 												}
