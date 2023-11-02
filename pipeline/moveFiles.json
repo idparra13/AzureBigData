@@ -207,20 +207,16 @@
 		],
 		"parameters": {
 			"SourceStore_Location": {
-				"type": "string",
-				"defaultValue": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios"
+				"type": "string"
 			},
 			"SourceStore_Directory": {
-				"type": "string",
-				"defaultValue": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios"
+				"type": "string"
 			},
 			"DestinationStore_Location": {
-				"type": "string",
-				"defaultValue": "https://stcontenedorcursobigdata.blob.core.windows.net/ejercicio4https://stcontenedorcursobigdata.blob.core.windows.net/ejercicio4"
+				"type": "string"
 			},
 			"DestinationStore_Directory": {
-				"type": "string",
-				"defaultValue": "https://stcontenedorcursobigdata.blob.core.windows.net/ejercicio4"
+				"type": "string"
 			}
 		},
 		"annotations": []
