@@ -111,21 +111,7 @@
 							"inputs": [
 								{
 									"referenceName": "DataSourceFile",
-									"type": "DatasetReference",
-									"parameters": {
-										"contenedor": {
-											"value": "@pipeline().parameters.SourceStore_Location",
-											"type": "Expression"
-										},
-										"directorio": {
-											"value": "@pipeline().parameters.DestinationStore_Directory",
-											"type": "Expression"
-										},
-										"nombrearchivo": {
-											"value": "@item().nombrearchivo",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
