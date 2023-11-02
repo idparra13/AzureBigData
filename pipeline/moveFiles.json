@@ -81,7 +81,8 @@
 						"value": "@activity('FilterFiles').output.value",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 20,
 					"activities": [
 						{
 							"name": "CopyFile",
