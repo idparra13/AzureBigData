@@ -19,8 +19,14 @@
 						"referenceName": "DataSourceFolder",
 						"type": "DatasetReference",
 						"parameters": {
-							"contenedor": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios",
-							"directorio": "https://stcontenedorcursobigdata.blob.core.windows.net/binarios"
+							"contenedor": {
+								"value": "@pipeline().parameters.DestinationStore_Location",
+								"type": "Expression"
+							},
+							"directorio": {
+								"value": "@pipeline().parameters.SourceStore_Directory",
+								"type": "Expression"
+							}
 						}
 					},
 					"fieldList": [
