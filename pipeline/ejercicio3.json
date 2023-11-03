@@ -19,6 +19,10 @@
 							"archivo": {
 								"value": "@pipeline().parameters.archivo",
 								"type": "Expression"
+							},
+							"hoja": {
+								"value": "@pipeline().parameters.hoja",
+								"type": "Expression"
 							}
 						}
 					},
@@ -318,7 +322,21 @@
 				"inputs": [
 					{
 						"referenceName": "Excel1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": {
+								"value": "@pipeline().parameters.contenedor",
+								"type": "Expression"
+							},
+							"archivo": {
+								"value": "@pipeline().parameters.archivo",
+								"type": "Expression"
+							},
+							"hoja": {
+								"value": "@pipeline().parameters.hoja",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -337,10 +355,16 @@
 		],
 		"parameters": {
 			"contenedor": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ejercicio3"
 			},
 			"archivo": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Municipio.xls"
+			},
+			"hoja": {
+				"type": "string",
+				"defaultValue": "datos"
 			}
 		},
 		"annotations": []
