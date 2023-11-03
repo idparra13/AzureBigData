@@ -5,14 +5,27 @@
 			"referenceName": "StorageAccountLink",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"contenedor": {
+				"type": "string"
+			},
+			"archivo": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "datos",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Municipio.xls",
-				"container": "ejercicio3"
+				"fileName": {
+					"value": "@dataset().archivo",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().contenedor",
+					"type": "Expression"
+				}
 			},
 			"firstRowAsHeader": true
 		},

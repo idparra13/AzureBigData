@@ -325,6 +325,14 @@
 				]
 			}
 		],
+		"parameters": {
+			"contenedor": {
+				"type": "string"
+			},
+			"archivo": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
