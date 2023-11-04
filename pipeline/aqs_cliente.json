@@ -1,5 +1,5 @@
 {
-	"name": "aqs_canton",
+	"name": "aqs_cliente",
 	"properties": {
 		"activities": [
 			{
@@ -14,7 +14,7 @@
 				"typeProperties": {
 					"variableName": "table",
 					"value": {
-						"value": "@json('[\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbt\",\n      \"tabla\":\"aqs_canton\",\n      \"pk_integracion\":\"Codigo\"\n   }\n]')",
+						"value": "@json('[\n   {\n      \"schema\":\"dbo\",\n      \"schema2\":\"dbt\",\n      \"tabla\":\"aqs_cliente\",\n      \"pk_integracion\":\"IdClienteCrm\"\n   }\n]')",
 						"type": "Expression"
 					}
 				}
@@ -118,7 +118,7 @@
 		"parameters": {
 			"schema1": {
 				"type": "string",
-				"defaultValue": "finance"
+				"defaultValue": "dbo"
 			},
 			"schema2": {
 				"type": "string",
