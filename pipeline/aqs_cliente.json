@@ -118,7 +118,7 @@
 		"parameters": {
 			"schema1": {
 				"type": "string",
-				"defaultValue": "dbo"
+				"defaultValue": "finance"
 			},
 			"schema2": {
 				"type": "string",
