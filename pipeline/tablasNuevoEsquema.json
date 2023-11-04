@@ -3,13 +3,105 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Execute Pipeline1",
+				"name": "LogisticsAddressCountryRegionStaging",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "LogisticsAddressCountryRegionStaging",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema1": {
+							"value": "@pipeline().parameters.esquemaDestino",
+							"type": "Expression"
+						},
+						"schema2": {
+							"value": "@pipeline().parameters.esquemaOrigen",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "PaymTermInvoiceStaging",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PaymTermInvoiceStaging",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema1": {
+							"value": "@pipeline().parameters.esquemaDestino",
+							"type": "Expression"
+						},
+						"schema2": {
+							"value": "@pipeline().parameters.esquemaOrigen",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "UFTProjInvoiceJourStaging",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "UFTProjInvoiceJourStaging",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema1": {
+							"value": "@pipeline().parameters.esquemaDestino",
+							"type": "Expression"
+						},
+						"schema2": {
+							"value": "@pipeline().parameters.esquemaOrigen",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "aqs_canton",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "aqs_canton",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema1": {
+							"value": "@pipeline().parameters.esquemaDestino",
+							"type": "Expression"
+						},
+						"schema2": {
+							"value": "@pipeline().parameters.esquemaOrigen",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "aqs_cliente",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "aqs_cliente",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
