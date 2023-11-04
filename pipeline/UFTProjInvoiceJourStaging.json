@@ -1,5 +1,5 @@
 {
-	"name": "aqs_cliente",
+	"name": "UFTProjInvoiceJourStaging",
 	"properties": {
 		"activities": [
 			{
@@ -14,7 +14,7 @@
 				"typeProperties": {
 					"variableName": "table",
 					"value": {
-						"value": "@json('[\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbt\",\n      \"tabla\":\"aqs_cliente\",\n      \"pk_integracion\":\"IdClienteCrm\"\n   }\n]')",
+						"value": "@json('[\n   {\n      \"schema\":\"finance\",\n      \"schema2\":\"dbt\",\n      \"tabla\":\"UFTProjInvoiceJourStaging\",\n      \"pk_integracion\":\"DATAAREAID\"\n   }\n]')",
 						"type": "Expression"
 					}
 				}
