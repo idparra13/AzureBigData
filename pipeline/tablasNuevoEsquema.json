@@ -1,6 +1,41 @@
 {
-	"name": "orquestador",
+	"name": "tablasNuevoEsquema",
 	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LogisticsAddressCountryRegionStaging",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema1": {
+							"value": "@pipeline().parameters.esquemaDestino",
+							"type": "Expression"
+						},
+						"schema2": {
+							"value": "@pipeline().parameters.esquemaOrigen",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"esquemaOrigen": {
+				"type": "string",
+				"defaultValue": "finance"
+			},
+			"esquemaDestino": {
+				"type": "string",
+				"defaultValue": "dbt"
+			}
+		},
 		"folder": {
 			"name": "Ejercicio2"
 		},
